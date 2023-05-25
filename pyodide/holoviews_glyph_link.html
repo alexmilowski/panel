@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Panel Application</title>
+    <style>
+      html, body {
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+<style type="text/css">
+:host(.pn-loading),
+.pn-loading {
+  overflow: hidden;
+}
+
+:host(.pn-loading):before,
+.pn-loading:before {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  content: '';
+  z-index: 1000;
+  background-color: rgb(255, 255, 255, 0.5);
+  border-color: lightgray;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 50%;
+  border-width: 1px;
+  cursor: progress;
+}
+
+:host(.pn-loading) .pn-loading-msg,
+.pn-loading .pn-loading-msg {
+  position: absolute;
+  top: 72%;
+  font-size: 2em;
+  color: black;
+  width: 100%;
+  text-align: center;
+}
+
+
+:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=");
+  background-size: auto calc(min(50%, 400px));
+}
+</style>
+<script type="text/javascript">
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./serviceWorker.js').then(reg => {
+    reg.onupdatefound = () => {
+      const installingWorker = reg.installing;
+      installingWorker.onstatechange = () => {
+        if (installingWorker.state === 'installed' &&
+            navigator.serviceWorker.controller) {
+          // Reload page if service worker is replaced
+          location.reload();
+        }
+      }
+    }
+  })
+}
+</script>
+
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.holoviz.org/panel/1.0.3/dist/panel.min.js"></script>
+
+<script type="text/javascript">
+  Bokeh.set_log_level("info");
+</script>  </head>
+  <body class="pn-loading pn-arc">
+    <div id="d2da1864-ec3f-4462-a9dd-6dc5851a0b65" data-root-id="p1005" style="display: contents;"></div>
+  <div id="d8858b98-2363-4a1a-b790-8cf8ce970eb4" data-root-id="p1006" style="display: contents;"></div>
+  <div id="c15f6aea-3a8d-4010-be64-6cbcdaa32636" data-root-id="p1007" style="display: contents;"></div>
+  <div id="c82a6a57-4c5b-4367-ae83-2b31fbc282ad" data-root-id="p1008" style="display: contents;"></div>
+  <div id="b3f96f84-4622-4700-8eb4-b22354af8e42" data-root-id="p1148" style="display: contents;"></div>
+  <div id="f786b263-8ac6-463c-b13f-3a992649f138" data-root-id="p1162" style="display: contents;"></div>
+  
+    <script type="text/javascript">
+      const pyodideWorker = new Worker("./holoviews_glyph_link.js");
+      pyodideWorker.busy = false
+      pyodideWorker.queue = []
+      
+      function send_change(jsdoc, event) {
+        if (event.setter_id != null && event.setter_id == 'py') {
+          return
+        } else if (pyodideWorker.busy && event.model && event.attr) {
+          let events = []
+          for (const old_event of pyodideWorker.queue) {
+            if (!(old_event.model === event.model && old_event.attr === event.attr)) {
+              events.push(old_event)
+            }
+          }
+          events.push(event)
+          pyodideWorker.queue = events
+          return
+        }
+        const patch = jsdoc.create_json_patch([event])
+        pyodideWorker.busy = true
+        pyodideWorker.postMessage({type: 'patch', patch: patch})
+      }
+      
+      pyodideWorker.onmessage = async (event) => {
+        const msg = event.data
+      
+        const body = document.getElementsByTagName('body')[0]
+        const loading_msgs = document.getElementsByClassName('pn-loading-msg')
+        if (msg.type === 'idle') {
+          if (pyodideWorker.queue.length) {
+            const patch = pyodideWorker.jsdoc.create_json_patch(pyodideWorker.queue)
+            pyodideWorker.busy = true
+            pyodideWorker.queue = []
+            pyodideWorker.postMessage({type: 'patch', patch: patch})
+          } else {
+            pyodideWorker.busy = false
+          }
+        } else if (msg.type === 'status') {
+          let loading_msg
+          if (loading_msgs.length) {
+            loading_msg = loading_msgs[0]
+          } else if (body.classList.contains('pn-loading')) {
+            loading_msg = document.createElement('div')
+            loading_msg.classList.add('pn-loading-msg')
+            body.appendChild(loading_msg)
+          }
+          if (loading_msg != null) {
+            loading_msg.innerHTML = msg.msg
+          }
+        } else if (msg.type === 'render') {
+          const docs_json = JSON.parse(msg.docs_json)
+          const render_items = JSON.parse(msg.render_items)
+          const root_ids = JSON.parse(msg.root_ids)
+      
+          // Remap roots in message to element IDs
+          const root_els = document.querySelectorAll('[data-root-id]')
+          const data_roots = []
+          for (const el of root_els) {
+             el.innerHTML = ''
+             data_roots.push([el.getAttribute('data-root-id'), el.id])
+          }
+          data_roots.sort((a, b) => a[0]<b[0] ? -1: 1)
+          const roots = {}
+          for (let i=0; i<data_roots.length; i++) {
+            roots[root_ids[i]] = data_roots[i][1]
+          }
+          render_items[0]['roots'] = roots
+          render_items[0]['root_ids'] = root_ids
+      
+          // Embed content
+          const [views] = await Bokeh.embed.embed_items(docs_json, render_items)
+      
+          // Remove loading spinner and message
+          body.classList.remove("pn-loading", "arc")
+          for (const loading_msg of loading_msgs) {
+            loading_msg.remove()
+          }
+      
+          // Setup bi-directional syncing
+          pyodideWorker.jsdoc = jsdoc = [...views.roots.values()][0].model.document
+          jsdoc.on_change(send_change.bind(null, jsdoc), false)
+          pyodideWorker.postMessage({'type': 'rendered'})
+          pyodideWorker.postMessage({'type': 'location', location: JSON.stringify(window.location)})
+        } else if (msg.type === 'patch') {
+          pyodideWorker.jsdoc.apply_json_patch(msg.patch, msg.buffers, setter_id='py')
+        }
+      };
+    </script>
+    <script type="application/json" id="p1189">
+      {"c5a02ca1-d82e-4b53-9b79-e292477a7bea":{"version":"3.1.1","title":"Panel Application","defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]}],"roots":[{"type":"object","name":"panel.models.markup.HTML","id":"p1005","attributes":{"css_classes":["markdown"],"stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"p1003","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1004","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/css/markdown.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1001","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"p1002","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/bundled/theme/native.css"}}],"margin":[5,10],"align":"start","text":"&amp;lt;p&amp;gt;HoloViews-generated Bokeh plots can be statically linked to widgets that control their properties, allowing you to export static HTML files that allow end-user customization of appearance.&amp;lt;/p&amp;gt;\n"}},{"type":"object","name":"panel.models.location.Location","id":"p1006","attributes":{"name":"location","reload":false}},{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1007","attributes":{"name":"browser_info"}},{"type":"object","name":"Row","id":"p1008","attributes":{"name":"Row00855","stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"type":"object","name":"ImportedStyleSheet","id":"p1020","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/css/listpanel.css"}},{"id":"p1001"},{"id":"p1002"}],"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Column","id":"p1009","attributes":{"name":"Column00838","stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"id":"p1020"},{"id":"p1001"},{"id":"p1002"}],"margin":0,"align":"start","children":[{"type":"object","name":"Slider","id":"p1011","attributes":{"js_property_callbacks":{"type":"map","entries":[["change:value",[{"type":"object","name":"CustomJS","id":"p1118","attributes":{"tags":[[5239688112,[null,"value"],["glyph","fill_alpha"]]],"args":{"type":"map","entries":[["bidirectional",false],["properties",{"type":"map","entries":[["value","glyph.fill_alpha"]]}],["source",{"id":"p1011"}],["target",{"type":"object","name":"Scatter","id":"p1073","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":12},"fill_color":{"type":"value","value":"#f80000"},"fill_alpha":{"type":"value","value":0.5},"hatch_color":{"type":"value","value":"#30a2da"}}}],["target_source",{"type":"object","name":"ColumnDataSource","id":"p1066","attributes":{"selected":{"type":"object","name":"Selection","id":"p1068","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1067"},"data":{"type":"map","entries":[["x",{"type":"ndarray","array":{"type":"bytes","data":"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"},"shape":[200],"dtype":"float64","order":"little"}],["y",{"type":"ndarray","array":{"type":"bytes","data":"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"},"shape":[200],"dtype":"float64","order":"little"}]]}}}],["xaxis",{"type":"object","name":"LinearAxis","id":"p1039","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1041","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1042"},"axis_label":"x","major_label_policy":{"type":"object","name":"AllLabels","id":"p1040"}}}],["x_range",{"type":"object","name":"Range1d","id":"p1021","attributes":{"tags":[[["x","x",null]]],"start":-2.8907711570916694,"end":2.6843877284293556,"reset_start":-2.8907711570916694,"reset_end":2.6843877284293556}}],["yaxis",{"type":"object","name":"LinearAxis","id":"p1046","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1048","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1049"},"axis_label":"y","major_label_policy":{"type":"object","name":"AllLabels","id":"p1047"}}}],["y_range",{"type":"object","name":"Range1d","id":"p1022","attributes":{"tags":[[["y","y",null]]],"start":-2.509966294799515,"end":3.1419697033823164,"reset_start":-2.509966294799515,"reset_end":3.1419697033823164}}],["plot",{"type":"object","name":"Figure","id":"p1023","attributes":{"width":null,"height":500,"margin":[5,10],"sizing_mode":"stretch_width","align":"start","x_range":{"id":"p1021"},"y_range":{"id":"p1022"},"x_scale":{"type":"object","name":"LinearScale","id":"p1035"},"y_scale":{"type":"object","name":"LinearScale","id":"p1037"},"title":{"type":"object","name":"Title","id":"p1026","attributes":{"text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p1076","attributes":{"data_source":{"id":"p1066"},"view":{"type":"object","name":"CDSView","id":"p1077","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1078"}}},"glyph":{"id":"p1073"},"selection_glyph":{"type":"object","name":"Scatter","id":"p1079","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":2.449489742783178},"angle":{"type":"value","value":0.0},"line_color":{"type":"value","value":"black"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0},"marker":{"type":"value","value":"circle"}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"p1074","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":2.449489742783178},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"p1075","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":2.449489742783178},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1031","attributes":{"tools":[{"type":"object","name":"SaveTool","id":"p1053"},{"type":"object","name":"PanTool","id":"p1054"},{"type":"object","name":"WheelZoomTool","id":"p1055"},{"type":"object","name":"BoxZoomTool","id":"p1056","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1057","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"ResetTool","id":"p1058"}],"active_drag":{"id":"p1054"},"active_scroll":{"id":"p1055"}}},"left":[{"id":"p1046"}],"below":[{"id":"p1039"}],"center":[{"type":"object","name":"Grid","id":"p1045","attributes":{"axis":{"id":"p1039"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p1052","attributes":{"dimension":1,"axis":{"id":"p1046"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}}],["cds",{"id":"p1066"}],["selected",{"id":"p1068"}],["glyph",{"id":"p1073"}],["glyph_renderer",{"id":"p1076"}]]},"code":"\n    var value = source['value'];\n    value = value;\n    value = value;\n    try {\n      var property = target.properties['fill_alpha'];\n      if (property !== undefined) { property.validate(value); }\n    } catch(err) {\n      console.log('WARNING: Could not set fill_alpha on target, raised error: ' + err);\n      return;\n    }\n    try {\n      target['fill_alpha'] = value;\n    } catch(err) {\n      console.log(err)\n    }\n    "}}]]]},"stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"id":"p1001"},{"id":"p1002"}],"margin":[5,10],"align":"start","title":"Alpha","start":0,"end":1,"value":0.5,"step":0.1}},{"type":"object","name":"ColorPicker","id":"p1013","attributes":{"js_property_callbacks":{"type":"map","entries":[["change:color",[{"type":"object","name":"CustomJS","id":"p1119","attributes":{"tags":[[5239688400,[null,"color"],["glyph","fill_color"]]],"args":{"type":"map","entries":[["bidirectional",false],["properties",{"type":"map","entries":[["value","glyph.fill_color"]]}],["source",{"id":"p1013"}],["target",{"id":"p1073"}],["target_source",{"id":"p1066"}],["xaxis",{"id":"p1039"}],["x_range",{"id":"p1021"}],["yaxis",{"id":"p1046"}],["y_range",{"id":"p1022"}],["plot",{"id":"p1023"}],["cds",{"id":"p1066"}],["selected",{"id":"p1068"}],["glyph",{"id":"p1073"}],["glyph_renderer",{"id":"p1076"}]]},"code":"\n    var value = source['color'];\n    value = value;\n    value = value;\n    try {\n      var property = target.properties['fill_color'];\n      if (property !== undefined) { property.validate(value); }\n    } catch(err) {\n      console.log('WARNING: Could not set fill_color on target, raised error: ' + err);\n      return;\n    }\n    try {\n      target['fill_color'] = value;\n    } catch(err) {\n      console.log(err)\n    }\n    "}}]]]},"stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"id":"p1001"},{"id":"p1002"}],"width":52,"min_width":52,"margin":[5,10],"align":"start","title":"Color","color":"#f80000"}},{"type":"object","name":"panel.models.widgets.CustomSelect","id":"p1016","attributes":{"js_property_callbacks":{"type":"map","entries":[["change:value",[{"type":"object","name":"CustomJS","id":"p1120","attributes":{"tags":[[5239688976,[null,"value"],["glyph","marker"]]],"args":{"type":"map","entries":[["bidirectional",false],["properties",{"type":"map","entries":[["value","glyph.marker"]]}],["source",{"id":"p1016"}],["target",{"id":"p1073"}],["target_source",{"id":"p1066"}],["xaxis",{"id":"p1039"}],["x_range",{"id":"p1021"}],["yaxis",{"id":"p1046"}],["y_range",{"id":"p1022"}],["plot",{"id":"p1023"}],["cds",{"id":"p1066"}],["selected",{"id":"p1068"}],["glyph",{"id":"p1073"}],["glyph_renderer",{"id":"p1076"}]]},"code":"\n    var value = source['value'];\n    value = value;\n    value = value;\n    try {\n      var property = target.properties['marker'];\n      if (property !== undefined) { property.validate(value); }\n    } catch(err) {\n      console.log('WARNING: Could not set marker on target, raised error: ' + err);\n      return;\n    }\n    try {\n      target['marker'] = value;\n    } catch(err) {\n      console.log(err)\n    }\n    "}}]]]},"stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"type":"object","name":"ImportedStyleSheet","id":"p1015","attributes":{"url":"https://cdn.holoviz.org/panel/1.0.3/dist/css/select.css"}},{"id":"p1001"},{"id":"p1002"}],"width":300,"min_width":300,"margin":[5,10],"align":"start","title":"Marker","options":["asterisk","circle","circle_cross","circle_dot","circle_x","circle_y","cross","dash","diamond","diamond_cross","diamond_dot","dot","hex","hex_dot","inverted_triangle","plus","square","square_cross","square_dot","square_pin","square_x","star","star_dot","triangle","triangle_dot","triangle_pin","x","y"],"value":"circle"}},{"type":"object","name":"Slider","id":"p1018","attributes":{"js_property_callbacks":{"type":"map","entries":[["change:value",[{"type":"object","name":"CustomJS","id":"p1121","attributes":{"tags":[[5239688208,[null,"value"],["glyph","size"]]],"args":{"type":"map","entries":[["bidirectional",false],["properties",{"type":"map","entries":[["value","glyph.size"]]}],["source",{"id":"p1018"}],["target",{"id":"p1073"}],["target_source",{"id":"p1066"}],["xaxis",{"id":"p1039"}],["x_range",{"id":"p1021"}],["yaxis",{"id":"p1046"}],["y_range",{"id":"p1022"}],["plot",{"id":"p1023"}],["cds",{"id":"p1066"}],["selected",{"id":"p1068"}],["glyph",{"id":"p1073"}],["glyph_renderer",{"id":"p1076"}]]},"code":"\n    var value = source['value'];\n    value = value;\n    value = value;\n    try {\n      var property = target.properties['size'];\n      if (property !== undefined) { property.validate(value); }\n    } catch(err) {\n      console.log('WARNING: Could not set size on target, raised error: ' + err);\n      return;\n    }\n    try {\n      target['size'] = value;\n    } catch(err) {\n      console.log(err)\n    }\n    "}}]]]},"stylesheets":["\n:host(.pn-loading.pn-arc):before, .pn-loading.arc:before {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJtYXJnaW46IGF1dG87IGJhY2tncm91bmQ6IG5vbmU7IGRpc3BsYXk6IGJsb2NrOyBzaGFwZS1yZW5kZXJpbmc6IGF1dG87IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzNjM2MzIiBzdHJva2Utd2lkdGg9IjEwIiByPSIzNSIgc3Ryb2tlLWRhc2hhcnJheT0iMTY0LjkzMzYxNDMxMzQ2NDE1IDU2Ljk3Nzg3MTQzNzgyMTM4Ij4gICAgPGFuaW1hdGVUcmFuc2Zvcm0gYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+ICA8L2NpcmNsZT48L3N2Zz4=\");\n  background-size: auto calc(min(50%, 400px));\n}",{"id":"p1003"},{"id":"p1001"},{"id":"p1002"}],"margin":[5,10],"align":"start","title":"Size","start":3,"end":20,"value":12,"step":0.1}}]}},{"id":"p1023"}]}},{"type":"object","name":"panel.models.location.Location","id":"p1148","attributes":{"name":"location","reload":false}},{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1162","attributes":{"name":"browser_info"}}],"callbacks":{"type":"map"}}}
+    </script>
+    <script type="text/javascript">
+      (function() {
+        const fn = function() {
+          Bokeh.safely(function() {
+            (function(root) {
+              function embed_document(root) {
+              const docs_json = document.getElementById('p1189').textContent;
+              const render_items = [{"docid":"c5a02ca1-d82e-4b53-9b79-e292477a7bea","roots":{"p1005":"d2da1864-ec3f-4462-a9dd-6dc5851a0b65","p1006":"d8858b98-2363-4a1a-b790-8cf8ce970eb4","p1007":"c15f6aea-3a8d-4010-be64-6cbcdaa32636","p1008":"c82a6a57-4c5b-4367-ae83-2b31fbc282ad","p1148":"b3f96f84-4622-4700-8eb4-b22354af8e42","p1162":"f786b263-8ac6-463c-b13f-3a992649f138"},"root_ids":["p1005","p1006","p1007","p1008","p1148","p1162"]}];
+              root.Bokeh.embed.embed_items(docs_json, render_items);
+              }
+              if (root.Bokeh !== undefined) {
+                embed_document(root);
+              } else {
+                let attempts = 0;
+                const timer = setInterval(function(root) {
+                  if (root.Bokeh !== undefined) {
+                    clearInterval(timer);
+                    embed_document(root);
+                  } else {
+                    attempts++;
+                    if (attempts > 100) {
+                      clearInterval(timer);
+                      console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                    }
+                  }
+                }, 10, root)
+              }
+            })(window);
+          });
+        };
+        if (document.readyState != "loading") fn();
+        else document.addEventListener("DOMContentLoaded", fn);
+      })();
+    </script>
+  </body>
+</html>
